@@ -1,0 +1,41 @@
+---
+import { getCollection } from 'astro:content';
+import ProjectCard from '../research/ProjectCard.astro';
+
+const allProjects = await getCollection('projects', ({ data }) => !data.draft && data.featured);
+const featuredProjects = allProjects.slice(0, 3);
+---
+
+{
+  featuredProjects.length > 0 && (
+    <section class="py-16">
+      <div class="container">
+        <div class="flex items-end justify-between mb-8">
+          <div>
+            <h2 class="section-heading">Featured Research</h2>
+            <p class="section-subheading mb-0">Our current focus areas and ongoing projects</p>
+          </div>
+          <a
+            href="/research"
+            class="hidden sm:inline-flex items-center text-accent-600 hover:text-accent-700 font-medium"
+          >
+            View all research
+            <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+            </svg>
+          </a>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {featuredProjects.map((project) => (
+            <ProjectCard project={project} />
+          ))}
+        </div>
+        <div class="mt-8 text-center sm:hidden">
+          <a href="/research" class="btn-secondary">
+            View all research
+          </a>
+        </div>
+      </div>
+    </section>
+  )
+}

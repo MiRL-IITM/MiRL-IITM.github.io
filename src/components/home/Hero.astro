@@ -1,0 +1,161 @@
+---
+import { Image } from 'astro:assets';
+import slide1 from '../../assets/images/hero/slide-1.svg';
+import slide2 from '../../assets/images/hero/slide-2.svg';
+
+const slides = [
+  {
+    image: slide1,
+    title: 'Advancing Medical Imaging Through Innovation',
+    subtitle:
+      'Developing next-generation computational methods for MRI, CT, and medical image analysis',
+    cta: { text: 'Explore Our Research', href: '/research' },
+  },
+  {
+    image: slide2,
+    title: 'Deep Learning for Clinical Impact',
+    subtitle: 'Translating AI research into practical tools that improve patient care',
+    cta: { text: 'View Publications', href: '/publications' },
+  },
+];
+---
+
+<section class="relative h-[500px] lg:h-[600px] overflow-hidden">
+  <!-- Carousel Container -->
+  <div id="hero-carousel" class="relative h-full">
+    {
+      slides.map((slide, index) => (
+        <div
+          class:list={[
+            'carousel-slide absolute inset-0 transition-opacity duration-700',
+            index === 0 ? 'opacity-100' : 'opacity-0',
+          ]}
+          data-slide={index}
+        >
+          <Image
+            src={slide.image}
+            alt=""
+            width={1200}
+            height={600}
+            class="w-full h-full object-cover"
+          />
+          <div class="absolute inset-0 bg-primary-900/60" />
+          <div class="absolute inset-0 flex items-center">
+            <div class="container">
+              <div class="max-w-2xl">
+                <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-4">
+                  {slide.title}
+                </h1>
+                <p class="text-xl text-primary-100 mb-8">{slide.subtitle}</p>
+                <a href={slide.cta.href} class="btn-primary bg-accent-500 hover:bg-accent-600">
+                  {slide.cta.text}
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      ))
+    }
+
+    <!-- Navigation Dots -->
+    <div class="absolute bottom-8 left-1/2 -translate-x-1/2 flex gap-3">
+      {
+        slides.map((_, index) => (
+          <button
+            class:list={[
+              'carousel-dot w-3 h-3 rounded-full transition-all',
+              index === 0 ? 'bg-white w-8' : 'bg-white/50 hover:bg-white/75',
+            ]}
+            data-slide={index}
+            aria-label={`Go to slide ${index + 1}`}
+          />
+        ))
+      }
+    </div>
+
+    <!-- Arrow Navigation -->
+    <button
+      id="prev-slide"
+      class="absolute left-4 top-1/2 -translate-y-1/2 w-12 h-12 bg-white/10 hover:bg-white/20 rounded-full flex items-center justify-center text-white transition-colors"
+      aria-label="Previous slide"
+    >
+      <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"
+        ></path>
+      </svg>
+    </button>
+    <button
+      id="next-slide"
+      class="absolute right-4 top-1/2 -translate-y-1/2 w-12 h-12 bg-white/10 hover:bg-white/20 rounded-full flex items-center justify-center text-white transition-colors"
+      aria-label="Next slide"
+    >
+      <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"
+        ></path>
+      </svg>
+    </button>
+  </div>
+</section>
+
+<script>
+  const slides = document.querySelectorAll('.carousel-slide');
+  const dots = document.querySelectorAll('.carousel-dot');
+  const prevBtn = document.getElementById('prev-slide');
+  const nextBtn = document.getElementById('next-slide');
+  let currentSlide = 0;
+  let autoplayInterval: ReturnType<typeof setInterval>;
+
+  function showSlide(index: number) {
+    slides.forEach((slide, i) => {
+      slide.classList.toggle('opacity-100', i === index);
+      slide.classList.toggle('opacity-0', i !== index);
+    });
+    dots.forEach((dot, i) => {
+      dot.classList.toggle('bg-white', i === index);
+      dot.classList.toggle('w-8', i === index);
+      dot.classList.toggle('bg-white/50', i !== index);
+      dot.classList.toggle('w-3', i !== index);
+    });
+    currentSlide = index;
+  }
+
+  function nextSlide() {
+    showSlide((currentSlide + 1) % slides.length);
+  }
+
+  function prevSlide() {
+    showSlide((currentSlide - 1 + slides.length) % slides.length);
+  }
+
+  function startAutoplay() {
+    autoplayInterval = setInterval(nextSlide, 5000);
+  }
+
+  function stopAutoplay() {
+    clearInterval(autoplayInterval);
+  }
+
+  // Event listeners
+  dots.forEach((dot, index) => {
+    dot.addEventListener('click', () => {
+      stopAutoplay();
+      showSlide(index);
+      startAutoplay();
+    });
+  });
+
+  prevBtn?.addEventListener('click', () => {
+    stopAutoplay();
+    prevSlide();
+    startAutoplay();
+  });
+
+  nextBtn?.addEventListener('click', () => {
+    stopAutoplay();
+    nextSlide();
+    startAutoplay();
+  });
+
+  // Start autoplay
+  startAutoplay();
+</script>

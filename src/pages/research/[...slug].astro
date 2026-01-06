@@ -1,0 +1,123 @@
+---
+import { getCollection, render } from 'astro:content';
+import { Image } from 'astro:assets';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+export async function getStaticPaths() {
+  const projects = await getCollection('projects', ({ data }) => !data.draft);
+  return projects.map((project) => ({
+    params: { slug: project.id },
+    props: { project },
+  }));
+}
+
+const { project } = Astro.props;
+const { data } = project;
+const { Content } = await render(project);
+
+const statusLabels = {
+  active: 'Active Project',
+  completed: 'Completed',
+  upcoming: 'Upcoming',
+};
+
+const statusStyles = {
+  active: 'badge-active',
+  completed: 'badge-completed',
+  upcoming: 'badge-upcoming',
+};
+
+const formatDate = (date: Date) =>
+  date.toLocaleDateString('en-US', { year: 'numeric', month: 'long' });
+---
+
+<BaseLayout title={data.title} description={data.description}>
+  <article>
+    {
+      data.featuredImage && (
+        <div class="w-full h-64 md:h-80 lg:h-96 bg-gray-100 overflow-hidden">
+          <Image
+            src={data.featuredImage}
+            alt={data.title}
+            width={1200}
+            height={400}
+            class="w-full h-full object-cover"
+          />
+        </div>
+      )
+    }
+
+    <div class="container py-12">
+      <nav class="mb-8">
+        <a
+          href="/research"
+          class="text-accent-600 hover:text-accent-700 text-sm flex items-center gap-1"
+        >
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M15 19l-7-7 7-7"></path>
+          </svg>
+          Back to Research
+        </a>
+      </nav>
+
+      <div class="max-w-4xl">
+        <div class="flex flex-wrap items-center gap-2 mb-4">
+          <span class={`badge ${statusStyles[data.status]}`}>{statusLabels[data.status]}</span>
+          {data.featured && <span class="badge bg-accent-100 text-accent-700">Featured</span>}
+        </div>
+
+        <h1 class="text-4xl font-bold text-primary-900 mb-4">{data.title}</h1>
+        <p class="text-xl text-gray-600 mb-6">{data.description}</p>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+          <div class="bg-gray-50 rounded-lg p-4">
+            <h3 class="text-sm font-medium text-gray-500 mb-2">Timeline</h3>
+            <p class="text-gray-900">
+              {formatDate(data.startDate)}
+              {data.endDate ? ` - ${formatDate(data.endDate)}` : ' - Present'}
+            </p>
+          </div>
+
+          {
+            data.funding && data.funding.length > 0 && (
+              <div class="bg-gray-50 rounded-lg p-4">
+                <h3 class="text-sm font-medium text-gray-500 mb-2">Funding</h3>
+                <ul class="space-y-1">
+                  {data.funding.map((fund) => (
+                    <li class="text-gray-900">
+                      {fund.agency}
+                      {fund.grantNumber && (
+                        <span class="text-gray-500 text-sm"> ({fund.grantNumber})</span>
+                      )}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )
+          }
+        </div>
+
+        <div class="mb-8">
+          <h3 class="text-sm font-medium text-gray-500 mb-2">Research Topics</h3>
+          <div class="flex flex-wrap gap-2">
+            {
+              data.topics.map((topic) => (
+                <span class="px-3 py-1 bg-primary-50 text-primary-700 rounded-full text-sm">
+                  {topic}
+                </span>
+              ))
+            }
+          </div>
+        </div>
+
+        <article class="prose prose-lg max-w-none">
+          <Content />
+        </article>
+      </div>
+    </div>
+  </article>
+</BaseLayout>

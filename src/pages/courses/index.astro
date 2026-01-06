@@ -1,0 +1,48 @@
+---
+import { getCollection } from "astro:content";
+import PageLayout from "../../layouts/PageLayout.astro";
+import CourseList from "../../components/courses/CourseList.astro";
+
+const allCourses = await getCollection("courses", ({ data }) => !data.draft);
+
+// Sort by year descending, then semester
+const semesterOrder = { spring: 1, summer: 2, fall: 3 };
+const sortedCourses = allCourses.sort((a, b) => {
+  if (b.data.year !== a.data.year) return b.data.year - a.data.year;
+  return semesterOrder[b.data.semester] - semesterOrder[a.data.semester];
+});
+
+const currentCourses = sortedCourses.filter((c) => c.data.currentlyOffered);
+const pastCourses = sortedCourses.filter((c) => !c.data.currentlyOffered);
+---
+
+<PageLayout
+  title="Courses"
+  description="Courses taught by faculty at the Medical Imaging and Reconstruction Lab"
+  wide
+>
+  <!-- Hero Section -->
+  <div
+    class="bg-linear-to-r from-primary-50 to-accent-50 rounded-2xl p-8 md:p-12 mb-12 shadow-sm border border-primary-100"
+  >
+    <h1 class="text-4xl md:text-5xl font-bold text-gray-900 mb-4">Courses</h1>
+    <p
+      class="text-lg md:text-xl text-gray-700 max-w-6xl leading-relaxed text-justify"
+    >
+      Our faculty teach cutting-edge courses in medical imaging, signal
+      processing, and machine learning at both undergraduate and graduate
+      levels. Explore our comprehensive curriculum designed to prepare students
+      for research and industry careers.
+    </p>
+  </div>
+
+  <CourseList courses={currentCourses} title="Currently Offered Courses" />
+
+  {
+    pastCourses.length > 0 && (
+      <div class="mt-16">
+        <CourseList courses={pastCourses} title="Previously Offered Courses" />
+      </div>
+    )
+  }
+</PageLayout>

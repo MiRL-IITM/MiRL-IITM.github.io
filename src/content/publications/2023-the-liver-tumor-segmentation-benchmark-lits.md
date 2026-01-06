@@ -1,0 +1,122 @@
+---
+title: "The liver tumor segmentation benchmark (lits)"
+authors:
+  - Patrick Bilic
+  - Patrick Christ
+  - Hongwei Bran Li
+  - Eugene Vorontsov
+  - Avi Ben-Cohen
+  - Georgios Kaissis
+  - Adi Szeskin
+  - Colin Jacobs
+  - Gabriel Efrain Humpire Mamani
+  - Gabriel Chartrand
+  - Fabian Lohöfer
+  - Julian Walter Holch
+  - Wieland Sommer
+  - Felix Hofmann
+  - Alexandre Hostettler
+  - Naama Lev-Cohain
+  - Michal Drozdzal
+  - Michal Marianne Amitai
+  - Refael Vivanti
+  - Jacob Sosna
+  - Ivan Ezhov
+  - Anjany Sekuboyina
+  - Fernando Navarro
+  - Florian Kofler
+  - Johannes C Paetzold
+  - Suprosanna Shit
+  - Xiaobin Hu
+  - Jana Lipková
+  - Markus Rempfler
+  - Marie Piraud
+  - Jan Kirschke
+  - Benedikt Wiestler
+  - Zhiheng Zhang
+  - Christian Hülsemeyer
+  - Marcel Beetz
+  - Florian Ettlinger
+  - Michela Antonelli
+  - Woong Bae
+  - Míriam Bellver
+  - Lei Bi
+  - Hao Chen
+  - Grzegorz Chlebus
+  - Erik B Dam
+  - Qi Dou
+  - Chi-Wing Fu
+  - Bogdan Georgescu
+  - Xavier Giró-i-Nieto
+  - Felix Gruen
+  - Xu Han
+  - Pheng-Ann Heng
+  - Jürgen Hesser
+  - Jan Hendrik Moltz
+  - Christian Igel
+  - Fabian Isensee
+  - Paul Jäger
+  - Fucang Jia
+  - Krishna Chaitanya Kaluva
+  - Mahendra Khened
+  - Ildoo Kim
+  - Jae-Hun Kim
+  - Sungwoong Kim
+  - Simon Kohl
+  - Tomasz Konopczynski
+  - Avinash Kori
+  - Ganapathy Krishnamurthi
+  - Fan Li
+  - Hongchao Li
+  - Junbo Li
+  - Xiaomeng Li
+  - John Lowengrub
+  - Jun Ma
+  - Klaus Maier-Hein
+  - Kevis-Kokitsi Maninis
+  - Hans Meine
+  - Dorit Merhof
+  - Akshay Pai
+  - Mathias Perslev
+  - Jens Petersen
+  - Jordi Pont-Tuset
+  - Jin Qi
+  - Xiaojuan Qi
+  - Oliver Rippel
+  - Karsten Roth
+  - Ignacio Sarasua
+  - Andrea Schenk
+  - Zengming Shen
+  - Jordi Torres
+  - Christian Wachinger
+  - Chunliang Wang
+  - Leon Weninger
+  - Jianrong Wu
+  - Daguang Xu
+  - Xiaoping Yang
+  - Simon Chun-Ho Yu
+  - Yading Yuan
+  - Miao Yue
+  - Liping Zhang
+  - Jorge Cardoso
+  - Spyridon Bakas
+  - Rickmer Braren
+  - Volker Heinemann
+  - Christopher Pal
+  - An Tang
+  - Samuel Kadoury
+  - Luc Soler
+  - Bram van Ginneken
+  - Hayit Greenspan
+  - Leo Joskowicz
+  - Bjoern Menze
+venue: "Medical image analysis"
+year: 2023
+pages: "102680"
+volume: "84"
+type: journal
+topics:
+  - Medical Imaging
+labAuthors:
+  - ganapathy-krishnamurthi
+---

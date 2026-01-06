@@ -1,0 +1,110 @@
+---
+import type { CollectionEntry } from "astro:content";
+import { Image } from "astro:assets";
+
+interface Props {
+  post: CollectionEntry<"posts">;
+}
+
+const { post } = Astro.props;
+const { data, id } = post;
+
+const categoryLabels: Record<string, string> = {
+  "research-highlight": "Research Highlight",
+  publication: "Publication",
+  award: "Award",
+  event: "Event",
+  announcement: "Announcement",
+  tutorial: "Tutorial",
+};
+
+const categoryStyles: Record<string, string> = {
+  "research-highlight": "bg-accent-100 text-accent-700 border-accent-200",
+  publication: "bg-blue-100 text-blue-700 border-blue-200",
+  award: "bg-yellow-100 text-yellow-700 border-yellow-200",
+  event: "bg-purple-100 text-purple-700 border-purple-200",
+  announcement: "bg-gray-100 text-gray-700 border-gray-200",
+  tutorial: "bg-green-100 text-green-700 border-green-200",
+};
+
+const formatDate = (date: Date) =>
+  date.toLocaleDateString("en-US", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  });
+---
+
+<a
+  href={`/blog/${id}`}
+  class="card group flex flex-col h-full overflow-hidden hover:shadow-lg transition-all duration-300 border border-gray-100 bg-white"
+  data-category={data.category}
+>
+  {
+    data.heroImage && (
+      <div class="aspect-video bg-gray-100 overflow-hidden shrink-0 relative">
+        <Image
+          src={data.heroImage}
+          alt={data.heroImageAlt || data.title}
+          width={600}
+          height={340}
+          class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+        />
+        <div class="absolute inset-0 bg-linear-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+      </div>
+    )
+  }
+  <div class="p-6 flex flex-col grow">
+    <div class="flex items-center justify-between gap-2 mb-4">
+      <span
+        class={`px-2.5 py-0.5 rounded-full text-xs font-semibold border ${categoryStyles[data.category]}`}
+      >
+        {categoryLabels[data.category]}
+      </span>
+      <span class="text-xs text-gray-500 font-medium flex items-center gap-1">
+        <svg
+          class="w-3.5 h-3.5"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
+          ></path>
+        </svg>
+        {formatDate(data.pubDate)}
+      </span>
+    </div>
+
+    <h3
+      class="text-xl font-bold text-primary-900 group-hover:text-primary-700 transition-colors mb-3 leading-tight"
+    >
+      {data.title}
+    </h3>
+
+    <p class="text-gray-600 text-sm line-clamp-3 mb-6 grow leading-relaxed">
+      {data.description}
+    </p>
+
+    <div
+      class="flex items-center text-accent-600 text-sm font-semibold group-hover:translate-x-1 transition-transform duration-300 mt-auto"
+    >
+      Read Article
+      <svg
+        class="w-4 h-4 ml-1"
+        fill="none"
+        stroke="currentColor"
+        viewBox="0 0 24 24"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+      </svg>
+    </div>
+  </div>
+</a>

@@ -1,0 +1,56 @@
+---
+import { getCollection } from "astro:content";
+import PostCard from "../blog/PostCard.astro";
+
+const allPosts = await getCollection("posts", ({ data }) => !data.draft);
+const latestPosts = allPosts
+  .sort(
+    (a, b) =>
+      new Date(b.data.pubDate).getTime() - new Date(a.data.pubDate).getTime()
+  )
+  .slice(0, 3);
+---
+
+{
+  latestPosts.length > 0 && (
+    <section class="py-16 bg-gray-50">
+      <div class="container">
+        <div class="flex items-end justify-between mb-8">
+          <div>
+            <h2 class="section-heading">Recent Posts</h2>
+            <p class="section-subheading mb-0">Updates from our lab</p>
+          </div>
+          <a
+            href="/blog"
+            class="hidden sm:inline-flex items-center text-accent-600 hover:text-accent-700 font-medium"
+          >
+            View all posts
+            <svg
+              class="w-4 h-4 ml-1"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M9 5l7 7-7 7"
+              />
+            </svg>
+          </a>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {latestPosts.map((post) => (
+            <PostCard post={post} />
+          ))}
+        </div>
+        <div class="mt-8 text-center sm:hidden">
+          <a href="/blog" class="btn-secondary">
+            View all posts
+          </a>
+        </div>
+      </div>
+    </section>
+  )
+}

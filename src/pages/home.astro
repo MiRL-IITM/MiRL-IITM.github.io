@@ -1,0 +1,38 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Hero from '../components/home/Hero.astro';
+import QuickLinks from '../components/home/QuickLinks.astro';
+import FeaturedResearch from '../components/home/FeaturedResearch.astro';
+import LatestNews from '../components/home/LatestNews.astro';
+---
+
+<BaseLayout
+  title="Home"
+  description="Medical Imaging and Reconstruction Lab - Advancing medical imaging through innovative research in image reconstruction, deep learning, and computational methods."
+>
+  <Hero />
+  <QuickLinks />
+  <FeaturedResearch />
+  <LatestNews />
+
+  <!-- Join Us Section -->
+  <section class="py-16">
+    <div class="container">
+      <div class="bg-primary-900 rounded-2xl p-8 md:p-12 lg:p-16 text-center">
+        <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">Join Our Team</h2>
+        <p class="text-primary-200 text-lg max-w-2xl mx-auto mb-8">
+          We are always looking for talented and motivated students and researchers to join our lab.
+          If you're passionate about medical imaging and machine learning, we'd love to hear from you.
+        </p>
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+          <a href="/people" class="btn-primary bg-accent-500 hover:bg-accent-600">
+            Meet Our Team
+          </a>
+          <a href="/contact" class="btn-secondary bg-white/10 border-white/30 text-white hover:bg-white/20">
+            Contact Us
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

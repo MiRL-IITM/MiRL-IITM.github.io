@@ -1,0 +1,63 @@
+---
+import { getCollection } from "astro:content";
+import PageLayout from "../../layouts/PageLayout.astro";
+import PersonGrid from "../../components/people/PersonGrid.astro";
+
+const allPeople = await getCollection("people", ({ data }) => !data.draft);
+
+// Sort and group people by role
+const sortByOrder = (a: any, b: any) =>
+  (a.data.order ?? 999) - (b.data.order ?? 999);
+
+const faculty = allPeople
+  .filter((p) => p.data.role === "faculty")
+  .sort(sortByOrder);
+const postdocs = allPeople
+  .filter((p) => p.data.role === "postdoc")
+  .sort(sortByOrder);
+const phdStudents = allPeople
+  .filter((p) => p.data.role === "phd")
+  .sort(sortByOrder);
+const mastersStudents = allPeople
+  .filter((p) => p.data.role === "masters")
+  .sort(sortByOrder);
+const undergrads = allPeople
+  .filter((p) => p.data.role === "undergraduate")
+  .sort(sortByOrder);
+const staff = allPeople
+  .filter((p) => p.data.role === "staff")
+  .sort(sortByOrder);
+const alumni = allPeople
+  .filter((p) => p.data.role === "alumni")
+  .sort((a, b) => (b.data.graduationYear ?? 0) - (a.data.graduationYear ?? 0));
+---
+
+<PageLayout title="People" description="Meet the team at the MiRL" wide>
+  <div class="mb-8">
+    <h1 class="text-4xl font-bold text-primary-900 mb-4">Our Team</h1>
+    <p class="text-lg text-gray-600 max-w-7xl">
+      MiRL brings together researchers and clinicians from diverse backgrounds
+      including electrical engineering, computer science, biomedical
+      engineering, and physics to advance medical imaging technology.
+    </p>
+  </div>
+
+  <PersonGrid people={faculty} title="Faculty" cardSize="large" />
+  <PersonGrid people={postdocs} title="Postdoctoral Researchers" />
+  <PersonGrid people={phdStudents} title="Ph.D. Students" />
+  <PersonGrid people={mastersStudents} title="Master's Students" />
+  <PersonGrid people={undergrads} title="Undergraduate Researchers" />
+  <PersonGrid people={staff} title="Staff" />
+
+  {
+    alumni.length > 0 && (
+      <section class="mt-16 pt-8 border-t border-gray-200">
+        <PersonGrid
+          people={alumni}
+          title="Alumni"
+          description="Our graduates have gone on to careers in academia, industry, and healthcare."
+        />
+      </section>
+    )
+  }
+</PageLayout>

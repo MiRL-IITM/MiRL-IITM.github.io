@@ -1,0 +1,148 @@
+---
+import PageLayout from "../layouts/PageLayout.astro";
+---
+
+<PageLayout
+  title="About"
+  description="Learn about the Medical Imaging and Reconstruction Laboratory"
+  wide
+>
+  <!-- Hero Section -->
+  <h1 class="text-5xl font-bold mb-4">About MiRL</h1>
+  <p class="text-2xl text-primary-500 max-w-7xl">
+    Advancing medical imaging technology through innovative research and
+    clinical collaboration
+  </p>
+  <hr class="my-10 border-white" />
+
+  <!-- Mission Section -->
+  <section class="mb-16">
+    <div>
+      <h2
+        class="text-3xl font-bold text-primary-900 mb-6 flex items-center gap-3"
+      >
+        <svg
+          class="w-8 h-8 text-accent-600"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+        </svg>
+        Our Mission
+      </h2>
+      <div class="prose prose-lg text-gray-700 max-w-6xl text-justify">
+        <p>
+          In close collaboration with radiologists, we develop methods for
+          automated analysis of medical images towards obtaining useful
+          diagnostic and prognostic information. We validate these methods on
+          publicly available databases as well as using data from our
+          radiologist collaborators.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Research Areas Section -->
+  <section class="mb-16">
+    <h2 class="text-3xl font-bold text-primary-900 mb-8 text-center">
+      Research Areas
+    </h2>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+      <div
+        class="bg-white rounded-xl p-8 shadow-lg hover:shadow-xl transition-shadow border border-gray-100"
+      >
+        <div
+          class="w-14 h-14 bg-primary-100 rounded-lg flex items-center justify-center mb-4"
+        >
+          <svg
+            class="w-8 h-8 text-primary-700"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"
+            ></path>
+          </svg>
+        </div>
+        <h3 class="text-2xl font-semibold text-primary-900 mb-4">
+          Medical Image Processing
+        </h3>
+        <p class="text-gray-600 leading-relaxed text-justify">
+          Development of advanced computational methods for medical image
+          analysis, including segmentation, registration, and quantitative
+          analysis for diagnostic and prognostic applications.
+        </p>
+      </div>
+
+      <div
+        class="bg-white rounded-xl p-8 shadow-lg hover:shadow-xl transition-shadow border border-gray-100"
+      >
+        <div
+          class="w-14 h-14 bg-accent-100 rounded-lg flex items-center justify-center mb-4"
+        >
+          <svg
+            class="w-8 h-8 text-accent-700"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"
+            ></path>
+          </svg>
+        </div>
+        <h3 class="text-2xl font-semibold text-primary-900 mb-4">
+          Multi-Modal Pre-Clinical Imaging Systems
+        </h3>
+        <p class="text-gray-600 leading-relaxed text-justify">
+          Design and development of low-cost imaging systems for pre-clinical
+          research, including fluorescence imaging and x-ray micro-CT systems
+          for in-vivo studies.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Collaboration Section -->
+  <section class="mb-16">
+    <div class="bg-white rounded-xl shadow-lg p-10 border border-gray-100">
+      <h2
+        class="text-3xl font-bold text-primary-900 mb-6 flex items-center gap-3"
+      >
+        <svg
+          class="w-8 h-8 text-accent-600"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"
+          ></path>
+        </svg>
+        Collaboration
+      </h2>
+      <p class="text-gray-700 text-lg leading-relaxed text-justify">
+        Our research is conducted in close collaboration with clinical
+        radiologists and medical professionals to ensure that our technological
+        innovations translate effectively into clinical practice. We work with
+        both publicly available medical imaging databases and proprietary
+        clinical datasets to validate and refine our methods.
+      </p>
+    </div>
+  </section>
+</PageLayout>

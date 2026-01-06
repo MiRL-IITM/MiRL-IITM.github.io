@@ -1,0 +1,342 @@
+---
+import { getCollection } from "astro:content";
+import PageLayout from "../../layouts/PageLayout.astro";
+import PaperList from "../../components/publications/PaperList.astro";
+
+const allPapers = await getCollection(
+  "publications",
+  ({ data }) => !data.draft
+);
+
+// Sort by year descending, then by month descending
+const sortedPapers = allPapers.sort((a, b) => {
+  if (b.data.year !== a.data.year) return b.data.year - a.data.year;
+  return (b.data.month ?? 0) - (a.data.month ?? 0);
+});
+
+// Get unique years and types for filtering
+const years = [...new Set(sortedPapers.map((p) => p.data.year))].sort(
+  (a, b) => b - a
+);
+const types = [...new Set(sortedPapers.map((p) => p.data.type))];
+const topics = [...new Set(sortedPapers.flatMap((p) => p.data.topics))].sort();
+
+// Featured papers
+const featuredPapers = sortedPapers.filter((p) => p.data.featured);
+
+const typeLabels: Record<string, string> = {
+  journal: "Journal Articles",
+  conference: "Conference Papers",
+  workshop: "Workshop Papers",
+  preprint: "Preprints",
+  thesis: "Theses",
+  "book-chapter": "Book Chapters",
+  patent: "Patents",
+};
+---
+
+<PageLayout
+  title="Publications"
+  description="Research publications from the Medical Imaging and Reconstruction Lab"
+  wide
+>
+  <div class="mb-8">
+    <h1 class="text-4xl font-bold text-primary-900 mb-4">Publications</h1>
+    <p class="text-lg text-gray-600 max-w-6xl">
+      Our research spans medical image reconstruction, deep learning, and
+      computational imaging. Below you'll find our published work in journals,
+      conferences, and preprints.
+    </p>
+  </div>
+
+  <!-- Stats -->
+  <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-8">
+    <div class="bg-primary-50 rounded-lg p-4 text-center">
+      <div class="text-3xl font-bold text-primary-900">
+        {sortedPapers.length}
+      </div>
+      <div class="text-sm text-gray-600">Total Publications</div>
+    </div>
+    <div class="bg-primary-50 rounded-lg p-4 text-center">
+      <div class="text-3xl font-bold text-primary-900">
+        {sortedPapers.filter((p) => p.data.type === "journal").length}
+      </div>
+      <div class="text-sm text-gray-600">Journal Articles</div>
+    </div>
+    <div class="bg-primary-50 rounded-lg p-4 text-center">
+      <div class="text-3xl font-bold text-primary-900">
+        {sortedPapers.filter((p) => p.data.type === "conference").length}
+      </div>
+      <div class="text-sm text-gray-600">Conference Papers</div>
+    </div>
+    <div class="bg-primary-50 rounded-lg p-4 text-center">
+      <div class="text-3xl font-bold text-primary-900">
+        {sortedPapers.filter((p) => p.data.award).length}
+      </div>
+      <div class="text-sm text-gray-600">Awards</div>
+    </div>
+  </div>
+
+  <!-- Search and Filters -->
+  <div
+    class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 mb-12 space-y-6"
+  >
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-4">
+      <div class="lg:col-span-6">
+        <label for="search" class="block text-sm font-medium text-gray-700 mb-1"
+          >Search</label
+        >
+        <div class="relative">
+          <div
+            class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none"
+          >
+            <svg
+              class="h-5 w-5 text-gray-400"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 20 20"
+              fill="currentColor"
+            >
+              <path
+                fill-rule="evenodd"
+                d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
+                clip-rule="evenodd"></path>
+            </svg>
+          </div>
+          <input
+            type="text"
+            id="search"
+            placeholder="Search title, authors..."
+            class="pl-10 block w-full rounded-lg border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500 sm:text-sm"
+          />
+        </div>
+      </div>
+      <div class="lg:col-span-3">
+        <label
+          for="type-filter"
+          class="block text-sm font-medium text-gray-700 mb-1">Type</label
+        >
+        <select
+          id="type-filter"
+          class="block w-full rounded-lg border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500 sm:text-sm"
+        >
+          <option value="">All Types</option>
+          {
+            Object.entries(typeLabels).map(([value, label]) => (
+              <option value={value}>{label}</option>
+            ))
+          }
+        </select>
+      </div>
+      <div class="lg:col-span-3">
+        <label
+          for="year-filter"
+          class="block text-sm font-medium text-gray-700 mb-1">Year</label
+        >
+        <select
+          id="year-filter"
+          class="block w-full rounded-lg border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500 sm:text-sm"
+        >
+          <option value="">All Years</option>
+          {years.map((year) => <option value={year}>{year}</option>)}
+        </select>
+      </div>
+    </div>
+
+    <div
+      class="flex flex-col sm:flex-row justify-between items-center text-sm text-gray-600 border-t border-gray-100 pt-4 gap-2"
+    >
+      <span id="results-count" class="font-medium"
+        >Showing {sortedPapers.length} publications</span
+      >
+      <button
+        id="reset-filters"
+        class="text-primary-600 hover:text-primary-800 font-medium hover:underline transition-colors flex items-center gap-1"
+      >
+        <svg
+          class="w-4 h-4"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+          ><path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
+          ></path></svg
+        >
+        Reset Filters
+      </button>
+    </div>
+  </div>
+
+  <div
+    id="no-results"
+    class="hidden text-center py-12 bg-gray-50 rounded-lg border-2 border-dashed border-gray-200"
+  >
+    <svg
+      class="mx-auto h-12 w-12 text-gray-400"
+      fill="none"
+      stroke="currentColor"
+      viewBox="0 0 24 24"
+    >
+      <path
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-width="2"
+        d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+      ></path>
+    </svg>
+    <h3 class="mt-2 text-sm font-medium text-gray-900">
+      No publications found
+    </h3>
+    <p class="mt-1 text-sm text-gray-500">
+      Try adjusting your search or filter to find what you're looking for.
+    </p>
+    <div class="mt-6">
+      <button
+        type="button"
+        id="clear-search-btn"
+        class="inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-primary-600 hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500"
+      >
+        Clear all filters
+      </button>
+    </div>
+  </div>
+
+  {
+    featuredPapers.length > 0 && (
+      <section class="mb-12">
+        <h2 class="text-2xl font-bold text-primary-900 mb-4">
+          Featured Publications
+        </h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {featuredPapers.map((paper) => (
+            <article class="card p-6 border-l-4 border-accent-500 flex flex-col h-full bg-white shadow-sm hover:shadow-md transition-shadow">
+              <div class="flex justify-between items-start gap-4 mb-3">
+                <span class="badge bg-primary-100 text-primary-700">
+                  {typeLabels[paper.data.type]?.replace(/s$/, "") ||
+                    paper.data.type}
+                </span>
+                {paper.data.award && (
+                  <span class="badge bg-yellow-100 text-yellow-800">
+                    {paper.data.award}
+                  </span>
+                )}
+              </div>
+              <h3 class="text-lg font-semibold text-primary-900 mb-3 grow">
+                {paper.data.title}
+              </h3>
+              <div class="mt-auto">
+                <p class="text-sm text-gray-600 mb-2 line-clamp-2">
+                  {paper.data.authors.join(", ")}
+                </p>
+                <p class="text-sm text-gray-500">
+                  {paper.data.venueShort || paper.data.venue}, {paper.data.year}
+                </p>
+              </div>
+            </article>
+          ))}
+        </div>
+      </section>
+    )
+  }
+
+  <section>
+    <PaperList papers={sortedPapers} groupByYear />
+  </section>
+  <script>
+    const searchInput = document.getElementById("search") as HTMLInputElement;
+    const typeFilter = document.getElementById(
+      "type-filter"
+    ) as HTMLSelectElement;
+    const yearFilter = document.getElementById(
+      "year-filter"
+    ) as HTMLSelectElement;
+    const resetBtn = document.getElementById("reset-filters");
+    const clearSearchBtn = document.getElementById("clear-search-btn");
+    const resultsCount = document.getElementById("results-count");
+    const noResults = document.getElementById("no-results");
+    const cards = document.querySelectorAll(".publication-card");
+    const yearGroups = document.querySelectorAll(".year-group");
+
+    function filterPublications() {
+      const searchTerm = searchInput.value.toLowerCase();
+      const typeValue = typeFilter.value;
+      const yearValue = yearFilter.value;
+
+      let visibleCount = 0;
+
+      cards.forEach((card) => {
+        const title = ((card as HTMLElement).dataset.title || "").toLowerCase();
+        const authors = (
+          (card as HTMLElement).dataset.authors || ""
+        ).toLowerCase();
+        const year = (card as HTMLElement).dataset.year;
+        const type = (card as HTMLElement).dataset.type;
+
+        const matchesSearch =
+          searchTerm === "" ||
+          title.includes(searchTerm) ||
+          authors.includes(searchTerm);
+
+        const matchesType = typeValue === "" || type === typeValue;
+        const matchesYear = yearValue === "" || year === yearValue;
+
+        if (matchesSearch && matchesType && matchesYear) {
+          (card as HTMLElement).style.display = "block";
+          visibleCount++;
+        } else {
+          (card as HTMLElement).style.display = "none";
+        }
+      });
+
+      // Handle year groups visibility
+      yearGroups.forEach((group) => {
+        let hasVisible = false;
+        const groupCards = group.querySelectorAll(".publication-card");
+        groupCards.forEach((c) => {
+          if ((c as HTMLElement).style.display !== "none") hasVisible = true;
+        });
+
+        if (hasVisible) {
+          (group as HTMLElement).style.display = "block";
+        } else {
+          (group as HTMLElement).style.display = "none";
+        }
+      });
+
+      if (resultsCount) {
+        resultsCount.textContent = `Showing ${visibleCount} publication${visibleCount !== 1 ? "s" : ""}`;
+      }
+
+      if (noResults) {
+        if (visibleCount === 0) {
+          noResults.classList.remove("hidden");
+        } else {
+          noResults.classList.add("hidden");
+        }
+      }
+    }
+
+    function resetFilters() {
+      if (searchInput) searchInput.value = "";
+      if (typeFilter) typeFilter.value = "";
+      if (yearFilter) yearFilter.value = "";
+      filterPublications();
+    }
+
+    if (searchInput && typeFilter && yearFilter) {
+      searchInput.addEventListener("input", filterPublications);
+      typeFilter.addEventListener("change", filterPublications);
+      yearFilter.addEventListener("change", filterPublications);
+    }
+
+    if (resetBtn) {
+      resetBtn.addEventListener("click", resetFilters);
+    }
+
+    if (clearSearchBtn) {
+      clearSearchBtn.addEventListener("click", resetFilters);
+    }
+  </script>
+</PageLayout>

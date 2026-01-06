@@ -1,0 +1,29 @@
+---
+import type { CollectionEntry } from "astro:content";
+import CourseCard from "./CourseCard.astro";
+
+interface Props {
+  courses: CollectionEntry<"courses">[];
+  title?: string;
+}
+
+const { courses, title } = Astro.props;
+---
+
+{
+  courses.length > 0 && (
+    <section>
+      {title && (
+        <div class="mb-8">
+          <h2 class="text-3xl font-bold text-gray-900 mb-2">{title}</h2>
+          <div class="h-1 w-20 bg-linear-to-r from-primary-600 to-accent-600 rounded-full" />
+        </div>
+      )}
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        {courses.map((course) => (
+          <CourseCard course={course} />
+        ))}
+      </div>
+    </section>
+  )
+}

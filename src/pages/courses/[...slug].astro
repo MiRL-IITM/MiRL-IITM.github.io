@@ -1,0 +1,400 @@
+---
+import { getCollection, render } from "astro:content";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+
+export async function getStaticPaths() {
+  const courses = await getCollection("courses", ({ data }) => !data.draft);
+  return courses.map((course) => ({
+    params: { slug: course.id },
+    props: { course },
+  }));
+}
+
+const { course } = Astro.props;
+const { data } = course;
+const { Content } = await render(course);
+
+// Fetch instructors
+const instructors = await Promise.all(
+  (data.instructors || []).map(async (slug) => {
+    const allPeople = await getCollection("people");
+    const person = allPeople.find(
+      (p) => p.id === slug || p.id.split("/").pop() === slug
+    );
+
+    if (person) {
+      return {
+        name: person.data.name,
+        website: person.data.website,
+      };
+    }
+
+    const name = slug
+      .split("-")
+      .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+      .join(" ");
+    return { name, website: null };
+  })
+);
+
+const semesterLabels = {
+  fall: "Fall",
+  spring: "Spring",
+  summer: "Summer",
+};
+
+const levelLabels = {
+  undergraduate: "Undergraduate",
+  graduate: "Graduate",
+  mixed: "Mixed",
+};
+---
+
+<BaseLayout
+  title={`${data.courseNumber}: ${data.title}`}
+  description={data.description}
+>
+  <div class="bg-linear-to-b from-primary-50 to-white">
+    <div class="container py-12 max-w-6xl mx-auto px-4">
+      <!-- Back Button -->
+      <div class="mb-6">
+        <a
+          href="/courses"
+          class="inline-flex items-center text-sm font-medium text-gray-500 hover:text-primary-600 transition-colors"
+        >
+          <svg
+            class="w-4 h-4 mr-1"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+          </svg>
+          Back to Courses
+        </a>
+      </div>
+
+      <!-- Header Section -->
+      <div class="mb-8">
+        <div class="flex items-center gap-3 mb-4">
+          <span
+            class="inline-block px-4 py-2 bg-linear-to-r from-primary-600 to-accent-600 text-white font-mono text-lg font-bold rounded-lg shadow-lg"
+          >
+            {data.courseNumber}
+          </span>
+          <span
+            class="inline-block px-3 py-1 bg-white border-2 border-primary-200 text-primary-700 text-sm font-semibold rounded-md shadow-sm"
+          >
+            {levelLabels[data.level]}
+          </span>
+          {
+            data.currentlyOffered && (
+              <span class="inline-block px-3 py-1 bg-green-500 text-white text-sm font-semibold rounded-md shadow-sm">
+                ✓ Currently Offered
+              </span>
+            )
+          }
+        </div>
+
+        <h1 class="text-4xl font-bold text-gray-900 mb-4">
+          {data.title}
+        </h1>
+
+        <p class="text-lg text-gray-600 max-w-4xl leading-relaxed">
+          {data.description}
+        </p>
+      </div>
+
+      <!-- Course Overview Card -->
+      <div
+        id="overview"
+        class="bg-white rounded-xl shadow-md border border-gray-200 p-6 mb-8"
+      >
+        <h3
+          class="text-xl font-bold text-gray-900 mb-4 flex items-center gap-2"
+        >
+          <svg
+            class="w-5 h-5 text-primary-600"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+            ></path>
+          </svg>
+          Course Overview
+        </h3>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div>
+            <dt
+              class="text-sm font-semibold text-gray-500 uppercase tracking-wide mb-1"
+            >
+              Instructor{instructors.length > 1 ? "s" : ""}
+            </dt>
+            <dd class="text-gray-900">
+              {
+                instructors.map((inst, i) => (
+                  <span>
+                    {inst.website ? (
+                      <a
+                        href={inst.website}
+                        class="text-primary-600 hover:text-primary-700 hover:underline font-medium"
+                      >
+                        {inst.name}
+                      </a>
+                    ) : (
+                      <span class="font-medium">{inst.name}</span>
+                    )}
+                    {i < instructors.length - 1 ? ", " : ""}
+                  </span>
+                ))
+              }
+            </dd>
+          </div>
+
+          <div>
+            <dt
+              class="text-sm font-semibold text-gray-500 uppercase tracking-wide mb-1"
+            >
+              Semester
+            </dt>
+            <dd class="text-gray-900 font-medium">
+              {semesterLabels[data.semester]}
+              {data.year}
+            </dd>
+          </div>
+
+          {
+            data.credits && (
+              <div>
+                <dt class="text-sm font-semibold text-gray-500 uppercase tracking-wide mb-1">
+                  Credits
+                </dt>
+                <dd class="text-gray-900 font-medium">{data.credits}</dd>
+              </div>
+            )
+          }
+
+          {
+            data.location && (
+              <div>
+                <dt class="text-sm font-semibold text-gray-500 uppercase tracking-wide mb-1">
+                  Location
+                </dt>
+                <dd class="text-gray-900 font-medium">{data.location}</dd>
+              </div>
+            )
+          }
+
+          {
+            data.schedule && (
+              <div class="md:col-span-2 lg:col-span-4 bg-white rounded-lg border border-gray-200 overflow-hidden shadow-sm">
+                <div class="bg-primary-50 px-4 py-3 border-b border-primary-100 flex items-center gap-2">
+                  <svg
+                    class="w-5 h-5 text-primary-700"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
+                    />
+                  </svg>
+                  <dt class="text-sm font-bold text-primary-900 uppercase tracking-wide">
+                    Class Schedule
+                  </dt>
+                </div>
+
+                <dd class="p-4">
+                  {data.schedule.includes(":") ? (
+                    (() => {
+                      const firstColonIndex = data.schedule.indexOf(":");
+                      const slotName = data.schedule
+                        .substring(0, firstColonIndex)
+                        .replace("Slot", "")
+                        .trim();
+                      const scheduleDetails = data.schedule.substring(
+                        firstColonIndex + 1
+                      );
+
+                      return (
+                        <div class="flex flex-col md:flex-row gap-6 items-center md:items-start">
+                          <div class="shrink-0 flex flex-col items-center justify-center bg-primary-600 text-white font-bold rounded-lg w-full md:w-24 h-16 md:h-16 shadow-md">
+                            <span class="text-2xl">{slotName}</span>
+                            <span class="text-xs font-normal opacity-90 uppercase tracking-wider">
+                              Slot
+                            </span>
+                          </div>
+                          <div class="grow w-full grid grid-cols-2 sm:grid-cols-4 gap-3">
+                            {scheduleDetails.split(",").map((timeSlot) => {
+                              const trimmed = timeSlot.trim();
+                              const firstSpaceIndex = trimmed.indexOf(" ");
+                              const day =
+                                firstSpaceIndex > -1
+                                  ? trimmed.substring(0, firstSpaceIndex)
+                                  : trimmed;
+                              const time =
+                                firstSpaceIndex > -1
+                                  ? trimmed.substring(firstSpaceIndex + 1)
+                                  : "";
+
+                              return (
+                                <div class="flex flex-col bg-gray-50 rounded-md p-3 border border-gray-200 text-center hover:border-primary-300 transition-colors">
+                                  <span class="text-xs font-bold text-primary-600 uppercase mb-1">
+                                    {day}
+                                  </span>
+                                  <span class="text-sm font-semibold text-gray-900">
+                                    {time}
+                                  </span>
+                                </div>
+                              );
+                            })}
+                          </div>
+                        </div>
+                      );
+                    })()
+                  ) : (
+                    <span class="text-gray-900 font-medium">
+                      {data.schedule}
+                    </span>
+                  )}
+                </dd>
+              </div>
+            )
+          }
+
+          {
+            data.semesterDates && (
+              <div>
+                <dt class="text-sm font-semibold text-gray-500 uppercase tracking-wide mb-1">
+                  Semester Dates
+                </dt>
+                <dd class="text-gray-900 font-medium">{data.semesterDates}</dd>
+              </div>
+            )
+          }
+
+          {
+            data.communication && (
+              <div>
+                <dt class="text-sm font-semibold text-gray-500 uppercase tracking-wide mb-1">
+                  Communication
+                </dt>
+                <dd class="text-gray-900 font-medium">{data.communication}</dd>
+              </div>
+            )
+          }
+        </div>
+
+        {
+          data.lectureMode && (
+            <div class="mt-6 pt-6 border-t border-gray-100">
+              <dt class="text-sm font-semibold text-gray-500 uppercase tracking-wide mb-1">
+                Lecture Mode
+              </dt>
+              <dd class="text-gray-700 text-sm leading-relaxed">
+                {data.lectureMode}
+              </dd>
+            </div>
+          )
+        }
+      </div>
+
+      <div class="space-y-8">
+        <!-- Prerequisites Section -->
+        <section
+          id="prerequisites"
+          class="bg-white rounded-xl shadow-md border border-gray-200 p-6"
+        >
+          <div class="flex items-center gap-2 mb-4">
+            <svg
+              class="w-6 h-6 text-primary-600"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+            </svg>
+            <h2 class="text-2xl font-bold text-gray-900">Prerequisites</h2>
+          </div>
+          {
+            data.prerequisites && data.prerequisites.length > 0 ? (
+              <ul class="space-y-2">
+                {data.prerequisites.map((prereq) => (
+                  <li class="flex items-start gap-3 text-gray-700">
+                    <span class="text-primary-600 font-bold mt-1">•</span>
+                    <span>{prereq}</span>
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              <p class="text-gray-600">No official prerequisites required.</p>
+            )
+          }
+        </section>
+
+        <!-- Course Content Section -->
+        <section
+          id="content"
+          class="bg-white rounded-xl shadow-md border border-gray-200 p-6"
+        >
+          <div
+            class="course-content prose prose-lg max-w-none prose-headings:text-gray-900 prose-p:text-gray-700 prose-ul:text-gray-700 prose-li:text-gray-700 prose-strong:text-gray-900 prose-a:text-primary-600 hover:prose-a:text-primary-700"
+          >
+            <Content />
+          </div>
+        </section>
+      </div>
+    </div>
+  </div>
+</BaseLayout>
+
+<style>
+  @reference "../../styles/global.css";
+
+  /* Custom table styling for course content */
+  .course-content :global(table) {
+    @apply w-full border-collapse my-6 rounded-lg overflow-hidden border border-gray-200 block overflow-x-auto;
+  }
+
+  @media (min-width: 768px) {
+    .course-content :global(table) {
+      display: table;
+    }
+  }
+
+  .course-content :global(thead) {
+    @apply bg-primary-50;
+  }
+
+  .course-content :global(th) {
+    @apply px-4 py-3 text-left text-sm font-semibold text-primary-900 border-b border-primary-200 whitespace-nowrap;
+  }
+
+  .course-content :global(td) {
+    @apply px-4 py-3 text-sm text-gray-700 border-b border-gray-100;
+  }
+
+  .course-content :global(tr:last-child td) {
+    @apply border-b-0;
+  }
+
+  .course-content :global(tr:hover td) {
+    @apply bg-gray-50 transition-colors;
+  }
+</style>

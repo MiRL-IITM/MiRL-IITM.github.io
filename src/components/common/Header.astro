@@ -1,0 +1,139 @@
+---
+import { Image } from "astro:assets";
+import logoShort from "../../assets/images/common/logo-short.png";
+
+const navLinks = [
+  { href: "/research", label: "Research" },
+  { href: "/publications", label: "Publications" },
+  { href: "/people", label: "People" },
+  { href: "/blog", label: "Blog" },
+  { href: "/courses", label: "Courses" },
+  { href: "/about", label: "About" },
+];
+
+const currentPath = Astro.url.pathname;
+if (currentPath !== "/") {
+  navLinks.unshift({ href: "/", label: "Home" });
+}
+---
+
+<header class="bg-white border-b border-gray-200 sticky top-0 z-50">
+  <div class="container">
+    <nav class="flex items-center justify-between h-16 lg:h-20">
+      <!-- Logo -->
+      <a
+        href="/"
+        class="flex items-center gap-3 text-primary-900 hover:text-primary-800"
+      >
+        <div
+          class="w-20 h-10 bg-white rounded-lg flex items-center justify-center"
+        >
+          <Image
+            src={logoShort}
+            alt="Logo"
+            class="w-full h-full object-contain"
+          />
+        </div>
+      </a>
+
+      <!-- Desktop Navigation -->
+      <div class="hidden lg:flex items-center gap-1">
+        {
+          navLinks.map((link) => (
+            <a
+              href={link.href}
+              class:list={[
+                "px-4 py-2 rounded-lg text-sm font-medium transition-colors",
+                (
+                  link.href === "/"
+                    ? currentPath === link.href
+                    : currentPath.startsWith(link.href)
+                )
+                  ? "bg-primary-50 text-primary-900"
+                  : "text-gray-600 hover:text-primary-900 hover:bg-gray-50",
+              ]}
+            >
+              {link.label}
+            </a>
+          ))
+        }
+      </div>
+
+      <!-- Mobile Menu Button -->
+      <button
+        type="button"
+        class="lg:hidden p-2 rounded-lg text-gray-600 hover:bg-gray-100"
+        id="mobile-menu-button"
+        aria-label="Toggle menu"
+        aria-expanded="false"
+      >
+        <svg
+          class="w-6 h-6"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+          id="menu-icon"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M4 6h16M4 12h16M4 18h16"></path>
+        </svg>
+        <svg
+          class="w-6 h-6 hidden"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+          id="close-icon"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M6 18L18 6M6 6l12 12"></path>
+        </svg>
+      </button>
+    </nav>
+
+    <!-- Mobile Navigation -->
+    <div class="lg:hidden hidden pb-4" id="mobile-menu">
+      <div class="flex flex-col gap-1">
+        {
+          navLinks.map((link) => (
+            <a
+              href={link.href}
+              class:list={[
+                "px-4 py-3 rounded-lg text-sm font-medium transition-colors",
+                (
+                  link.href === "/"
+                    ? currentPath === link.href
+                    : currentPath.startsWith(link.href)
+                )
+                  ? "bg-primary-50 text-primary-900"
+                  : "text-gray-600 hover:text-primary-900 hover:bg-gray-50",
+              ]}
+            >
+              {link.label}
+            </a>
+          ))
+        }
+      </div>
+    </div>
+  </div>
+</header>
+
+<script>
+  const menuButton = document.getElementById("mobile-menu-button");
+  const mobileMenu = document.getElementById("mobile-menu");
+  const menuIcon = document.getElementById("menu-icon");
+  const closeIcon = document.getElementById("close-icon");
+
+  menuButton?.addEventListener("click", () => {
+    const isExpanded = menuButton.getAttribute("aria-expanded") === "true";
+    menuButton.setAttribute("aria-expanded", (!isExpanded).toString());
+    mobileMenu?.classList.toggle("hidden");
+    menuIcon?.classList.toggle("hidden");
+    closeIcon?.classList.toggle("hidden");
+  });
+</script>

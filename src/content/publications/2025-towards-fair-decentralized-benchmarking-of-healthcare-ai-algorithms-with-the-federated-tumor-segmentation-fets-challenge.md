@@ -1,0 +1,163 @@
+---
+title: "Towards fair decentralized benchmarking of healthcare AI algorithms with the Federated Tumor Segmentation (FeTS) challenge"
+authors:
+  - Maximilian Zenk
+  - Ujjwal Baid
+  - Sarthak Pati
+  - Akis Linardos
+  - Brandon Edwards
+  - Micah Sheller
+  - Patrick Foley
+  - Alejandro Aristizabal
+  - David Zimmerer
+  - Alexey Gruzdev
+  - Jason Martin
+  - Russell T Shinohara
+  - Annika Reinke
+  - Fabian Isensee
+  - Santhosh Parampottupadam
+  - Kaushal Parekh
+  - Ralf Floca
+  - Hasan Kassem
+  - Bhakti Baheti
+  - Siddhesh Thakur
+  - Verena Chung
+  - Kaisar Kushibar
+  - Karim Lekadir
+  - Meirui Jiang
+  - Youtan Yin
+  - Hongzheng Yang
+  - Quande Liu
+  - Cheng Chen
+  - Qi Dou
+  - Pheng-Ann Heng
+  - Xiaofan Zhang
+  - Shaoting Zhang
+  - Muhammad Irfan Khan
+  - Mohammad Ayyaz Azeem
+  - Mojtaba Jafaritadi
+  - Esa Alhoniemi
+  - Elina Kontio
+  - Suleiman A Khan
+  - Leon Mächler
+  - Ivan Ezhov
+  - Florian Kofler
+  - Suprosanna Shit
+  - Johannes C Paetzold
+  - Timo Loehr
+  - Benedikt Wiestler
+  - Himashi Peiris
+  - Kamlesh Pawar
+  - Shenjun Zhong
+  - Zhaolin Chen
+  - Munawar Hayat
+  - Gary Egan
+  - Mehrtash Harandi
+  - Ece Isik Polat
+  - Gorkem Polat
+  - Altan Kocyigit
+  - Alptekin Temizel
+  - Anup Tuladhar
+  - Lakshay Tyagi
+  - Raissa Souza
+  - Nils D Forkert
+  - Pauline Mouches
+  - Matthias Wilms
+  - Vishruth Shambhat
+  - Akansh Maurya
+  - Shubham Subhas Danannavar
+  - Rohit Kalla
+  - Vikas Kumar Anand
+  - Ganapathy Krishnamurthi
+  - Sahil Nalawade
+  - Chandan Ganesh
+  - Ben Wagner
+  - Divya Reddy
+  - Yudhajit Das
+  - Fang F Yu
+  - Baowei Fei
+  - Ananth J Madhuranthakam
+  - Joseph Maldjian
+  - Gaurav Singh
+  - Jianxun Ren
+  - Wei Zhang
+  - Ning An
+  - Qingyu Hu
+  - Youjia Zhang
+  - Ying Zhou
+  - Vasilis Siomos
+  - Giacomo Tarroni
+  - Jonathan Passerrat-Palmbach
+  - Ambrish Rawat
+  - Giulio Zizzo
+  - Swanand Ravindra Kadhe
+  - Jonathan P Epperlein
+  - Stefano Braghin
+  - Yuan Wang
+  - Renuga Kanagavelu
+  - Qingsong Wei
+  - Yechao Yang
+  - Yong Liu
+  - Krzysztof Kotowski
+  - Szymon Adamski
+  - Bartosz Machura
+  - Wojciech Malara
+  - Lukasz Zarudzki
+  - Jakub Nalepa
+  - Yaying Shi
+  - Hongjian Gao
+  - Salman Avestimehr
+  - Yonghong Yan
+  - Agus S Akbar
+  - Ekaterina Kondrateva
+  - Hua Yang
+  - Zhaopei Li
+  - Hung-Yu Wu
+  - Johannes Roth
+  - Camillo Saueressig
+  - Alexandre Milesi
+  - Quoc D Nguyen
+  - Nathan J Gruenhagen
+  - Tsung-Ming Huang
+  - Jun Ma
+  - Har Shwinder H Singh
+  - Nai-Yu Pan
+  - Dingwen Zhang
+  - Ramy A Zeineldin
+  - Michal Futrega
+  - Yading Yuan
+  - Gian Marco Conte
+  - Xue Feng
+  - Quan D Pham
+  - Yong Xia
+  - Zhifan Jiang
+  - Huan Minh Luu
+  - Mariia Dobko
+  - Alexandre Carré
+  - Bair Tuchinov
+  - Hassan Mohy-ud-Din
+  - Saruar Alam
+  - Anup Singh
+  - Nameeta Shah
+  - Weichung Wang
+  - Chiharu Sako
+  - Michel Bilello
+  - Satyam Ghodasara
+  - Suyash Mohan
+  - Christos Davatzikos
+  - Evan Calabrese
+  - Jeffrey Rudie
+  - Javier Villanueva-Meyer
+  - Soonmee Cha
+  - Christopher Hess
+  - John Mongan
+venue: "Nature communications"
+year: 2025
+pages: "6274"
+volume: "16"
+type: journal
+topics:
+  - Medical Imaging
+labAuthors:
+  - ganapathy-krishnamurthi
+---

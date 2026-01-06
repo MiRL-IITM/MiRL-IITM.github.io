@@ -1,0 +1,159 @@
+---
+title: "Identifying the best machine learning algorithms for brain tumor segmentation, progression assessment, and overall survival prediction in the BRATS challenge"
+authors:
+  - Spyridon Bakas
+  - Mauricio Reyes
+  - Andras Jakab
+  - Stefan Bauer
+  - Markus Rempfler
+  - Alessandro Crimi
+  - Russell Takeshi Shinohara
+  - Christoph Berger
+  - Sung Min Ha
+  - Martin Rozycki
+  - Marcel Prastawa
+  - Esther Alberts
+  - Jana Lipkova
+  - John Freymann
+  - Justin Kirby
+  - Michel Bilello
+  - Hassan Fathallah-Shaykh
+  - Roland Wiest
+  - Jan Kirschke
+  - Benedikt Wiestler
+  - Rivka Colen
+  - Aikaterini Kotrotsou
+  - Pamela Lamontagne
+  - Daniel Marcus
+  - Mikhail Milchenko
+  - Arash Nazeri
+  - Marc-Andre Weber
+  - Abhishek Mahajan
+  - Ujjwal Baid
+  - Elizabeth Gerstner
+  - Dongjin Kwon
+  - Gagan Acharya
+  - Manu Agarwal
+  - Mahbubul Alam
+  - Alberto Albiol
+  - Antonio Albiol
+  - Francisco J Albiol
+  - Varghese Alex
+  - Nigel Allinson
+  - Pedro HA Amorim
+  - Abhijit Amrutkar
+  - Ganesh Anand
+  - Simon Andermatt
+  - Tal Arbel
+  - Pablo Arbelaez
+  - Aaron Avery
+  - Muneeza Azmat
+  - W Bai
+  - Subhashis Banerjee
+  - Bill Barth
+  - Thomas Batchelder
+  - Kayhan Batmanghelich
+  - Enzo Battistella
+  - Andrew Beers
+  - Mikhail Belyaev
+  - Martin Bendszus
+  - Eze Benson
+  - Jose Bernal
+  - Halandur Nagaraja Bharath
+  - George Biros
+  - Sotirios Bisdas
+  - James Brown
+  - Mariano Cabezas
+  - Shilei Cao
+  - Jorge M Cardoso
+  - Eric N Carver
+  - Adrià Casamitjana
+  - Laura Silvana Castillo
+  - Marcel Catà
+  - Philippe Cattin
+  - Albert Cerigues
+  - Vinicius S Chagas
+  - Siddhartha Chandra
+  - Yi-Ju Chang
+  - Shiyu Chang
+  - Ken Chang
+  - Joseph Chazalon
+  - Shengcong Chen
+  - Wei Chen
+  - Jefferson W Chen
+  - Zhaolin Chen
+  - Kun Cheng
+  - Ahana Roy Choudhury
+  - Roger Chylla
+  - Albert Clérigues
+  - Steven Colleman
+  - Ramiro German Rodriguez Colmeiro
+  - Marc Combalia
+  - Anthony Costa
+  - Xiaomeng Cui
+  - Zhenzhen Dai
+  - Lutao Dai
+  - Laura Alexandra Daza
+  - Eric Deutsch
+  - Changxing Ding
+  - Chao Dong
+  - Shidu Dong
+  - Wojciech Dudzik
+  - Zach Eaton-Rosen
+  - Gary Egan
+  - Guilherme Escudero
+  - Théo Estienne
+  - Richard Everson
+  - Jonathan Fabrizio
+  - Yong Fan
+  - Longwei Fang
+  - Xue Feng
+  - Enzo Ferrante
+  - Lucas Fidon
+  - Martin Fischer
+  - Andrew P French
+  - Naomi Fridman
+  - Huan Fu
+  - David Fuentes
+  - Yaozong Gao
+  - Evan Gates
+  - David Gering
+  - Amir Gholami
+  - Willi Gierke
+  - Ben Glocker
+  - Mingming Gong
+  - Sandra González-Villá
+  - T Grosges
+  - Yuanfang Guan
+  - Sheng Guo
+  - Sudeep Gupta
+  - Woo-Sup Han
+  - Il Song Han
+  - Konstantin Harmuth
+  - Huiguang He
+  - Aura Hernández-Sabaté
+  - Evelyn Herrmann
+  - Naveen Himthani
+  - Winston Hsu
+  - Cheyu Hsu
+  - Xiaojun Hu
+  - Xiaobin Hu
+  - Yan Hu
+  - Yifan Hu
+  - Rui Hua
+  - Teng-Yi Huang
+  - Weilin Huang
+  - Sabine Van Huffel
+  - Quan Huo
+  - Vivek HV
+  - Khan M Iftekharuddin
+  - Fabian Isensee
+  - Mobarakol Islam
+  - Aaron S Jackson
+  - Sachin R Jambawalikar
+venue: "arXiv preprint arXiv:1811.02629"
+year: 2018
+type: preprint
+topics:
+  - Medical Imaging
+---

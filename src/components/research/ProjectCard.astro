@@ -1,0 +1,63 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import { Image } from 'astro:assets';
+
+interface Props {
+  project: CollectionEntry<'projects'>;
+}
+
+const { project } = Astro.props;
+const { data, id } = project;
+
+const statusStyles = {
+  active: 'badge-active',
+  completed: 'badge-completed',
+  upcoming: 'badge-upcoming',
+};
+
+const statusLabels = {
+  active: 'Active',
+  completed: 'Completed',
+  upcoming: 'Upcoming',
+};
+---
+
+<a href={`/research/${id}`} class="card block group overflow-hidden">
+  {
+    data.featuredImage && (
+      <div class="aspect-video bg-gray-100 overflow-hidden">
+        <Image
+          src={data.featuredImage}
+          alt={data.title}
+          width={600}
+          height={340}
+          class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+        />
+      </div>
+    )
+  }
+  <div class="p-5">
+    <div class="flex items-center gap-2 mb-3">
+      <span class={`badge ${statusStyles[data.status]}`}>{statusLabels[data.status]}</span>
+      {data.featured && <span class="badge bg-accent-100 text-accent-700">Featured</span>}
+    </div>
+    <h3
+      class="text-lg font-semibold text-primary-900 group-hover:text-accent-600 transition-colors mb-2"
+    >
+      {data.shortTitle || data.title}
+    </h3>
+    <p class="text-gray-600 text-sm line-clamp-2 mb-3">
+      {data.description}
+    </p>
+    <div class="flex flex-wrap gap-1">
+      {
+        data.topics.slice(0, 3).map((topic) => (
+          <span class="text-xs bg-gray-100 text-gray-600 px-2 py-0.5 rounded">{topic}</span>
+        ))
+      }
+      {data.topics.length > 3 && (
+        <span class="text-xs text-gray-400">+{data.topics.length - 3}</span>
+      )}
+    </div>
+  </div>
+</a>

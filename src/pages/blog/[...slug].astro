@@ -1,0 +1,224 @@
+---
+import { getCollection, render, getEntry } from "astro:content";
+import { Image } from "astro:assets";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+
+export async function getStaticPaths() {
+  const posts = await getCollection("posts"); // Allow drafts in dev if needed, or stick to !draft
+  return posts.map((post) => ({
+    params: { slug: post.id },
+    props: { post },
+  }));
+}
+
+const { post } = Astro.props;
+const { data } = post;
+const { Content } = await render(post);
+
+const author = data.author ? await getEntry("people", data.author) : null;
+
+const categoryLabels: Record<string, string> = {
+  "research-highlight": "Research Highlight",
+  publication: "Publication",
+  award: "Award",
+  event: "Event",
+  announcement: "Announcement",
+  tutorial: "Tutorial",
+};
+
+const categoryStyles: Record<string, string> = {
+  "research-highlight": "bg-accent-100 text-accent-700 border-accent-200",
+  publication: "bg-blue-100 text-blue-700 border-blue-200",
+  award: "bg-yellow-100 text-yellow-700 border-yellow-200",
+  event: "bg-purple-100 text-purple-700 border-purple-200",
+  announcement: "bg-gray-100 text-gray-700 border-gray-200",
+  tutorial: "bg-green-100 text-green-700 border-green-200",
+};
+
+const formatDate = (date: Date) =>
+  date.toLocaleDateString("en-US", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  });
+---
+
+<BaseLayout title={data.title} description={data.description}>
+  <article class="bg-white min-h-screen">
+    {
+      data.heroImage && (
+        <div class="relative w-full h-100 md:h-125 bg-gray-100 overflow-hidden">
+          <div class="absolute inset-0 bg-linear-to-t from-black/50 to-transparent z-10" />
+          <Image
+            src={data.heroImage}
+            alt={data.heroImageAlt || data.title}
+            width={1600}
+            height={800}
+            class="w-full h-full object-cover"
+          />
+          <div class="absolute bottom-0 left-0 w-full z-20 p-6 md:p-12 text-white">
+            <div class="container mx-auto max-w-4xl">
+              <div class="flex items-center gap-3 mb-4">
+                <span
+                  class={`px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wide bg-white/90 text-gray-900 shadow-sm border-none`}
+                >
+                  {categoryLabels[data.category]}
+                </span>
+                <span class="text-white/90 text-sm font-medium flex items-center gap-1.5 bg-black/30 px-3 py-1 rounded-full backdrop-blur-sm">
+                  <svg
+                    class="w-4 h-4"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
+                    />
+                  </svg>
+                  {formatDate(data.pubDate)}
+                </span>
+              </div>
+              <h1 class="text-3xl md:text-5xl font-bold leading-tight mb-4 text-white drop-shadow-sm">
+                {data.title}
+              </h1>
+              {author && (
+                <div class="flex items-center gap-3 mt-6">
+                  {author.data.photo && (
+                    <div class="w-10 h-10 rounded-full overflow-hidden border-2 border-white/50">
+                      <Image
+                        src={author.data.photo}
+                        alt={author.data.name}
+                        width={80}
+                        height={80}
+                        class="w-full h-full object-cover"
+                      />
+                    </div>
+                  )}
+                  <div class="flex flex-col text-sm">
+                    <span class="font-semibold text-white">
+                      {author.data.name}
+                    </span>
+                    {author.data.title && (
+                      <span class="text-white/80 text-xs">
+                        {author.data.title}
+                      </span>
+                    )}
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      )
+    }
+
+    <div class="container mx-auto py-12 px-4 sm:px-6">
+      <nav class="mb-10 max-w-4xl mx-auto">
+        <a
+          href="/blog"
+          class="inline-flex items-center gap-2 text-sm font-medium text-gray-500 hover:text-primary-700 transition-colors group"
+        >
+          <div
+            class="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center group-hover:bg-primary-50 group-hover:text-primary-600 transition-colors"
+          >
+            <svg
+              class="w-4 h-4"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+            </svg>
+          </div>
+          Back to Blog
+        </a>
+      </nav>
+
+      <div class="max-w-4xl mx-auto">
+        {
+          !data.heroImage && (
+            <div class="mb-10 text-center">
+              <div class="flex items-center justify-center gap-3 mb-6">
+                <span
+                  class={`px-3 py-1 rounded-full text-xs font-semibold border uppercase tracking-wider ${categoryStyles[data.category]}`}
+                >
+                  {categoryLabels[data.category]}
+                </span>
+                <span class="text-gray-500 text-sm font-medium">
+                  {formatDate(data.pubDate)}
+                </span>
+              </div>
+              <h1 class="text-4xl md:text-5xl font-bold text-primary-900 mb-6 leading-tight">
+                {data.title}
+              </h1>
+              {author && (
+                <div class="flex items-center justify-center gap-3 text-left">
+                  {author.data.photo && (
+                    <div class="w-10 h-10 rounded-full overflow-hidden border border-gray-200">
+                      <Image
+                        src={author.data.photo}
+                        alt={author.data.name}
+                        width={80}
+                        height={80}
+                        class="w-full h-full object-cover"
+                      />
+                    </div>
+                  )}
+                  <div>
+                    <p class="text-sm font-semibold text-gray-900">
+                      {author.data.name}
+                    </p>
+                    <p class="text-xs text-gray-500">{author.data.title}</p>
+                  </div>
+                </div>
+              )}
+              <hr class="mt-8 border-gray-200" />
+            </div>
+          )
+        }
+
+        {/* Introduction / Lead */}
+        {
+          data.description && (
+            <p class="text-xl md:text-2xl text-gray-600 mb-10 leading-relaxed font-light">
+              {data.description}
+            </p>
+          )
+        }
+
+        {
+          data.tags && data.tags.length > 0 && (
+            <div class="flex flex-wrap gap-2 mb-10">
+              {data.tags.map((tag) => (
+                <span class="text-sm bg-gray-50 text-gray-600 border border-gray-100 px-3 py-1 rounded-full hover:bg-gray-100 transition-colors cursor-default">
+                  #{tag}
+                </span>
+              ))}
+            </div>
+          )
+        }
+
+        <article
+          class="prose prose-lg md:prose-xl prose-primary max-w-none prose-headings:text-primary-900 prose-a:text-accent-600 hover:prose-a:text-accent-700 prose-img:rounded-xl prose-img:shadow-md"
+        >
+          <Content />
+        </article>
+
+        {
+          data.updatedDate && (
+            <p class="text-sm text-gray-500 mt-8 pt-4 border-t">
+              Last updated: {formatDate(data.updatedDate)}
+            </p>
+          )
+        }
+      </div>
+    </div>
+  </article>
+</BaseLayout>

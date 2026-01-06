@@ -1,0 +1,34 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import PersonCard from './PersonCard.astro';
+
+interface Props {
+  people: CollectionEntry<'people'>[];
+  title?: string;
+  description?: string;
+  cardSize?: 'default' | 'large';
+}
+
+const { people, title, description, cardSize = 'default' } = Astro.props;
+---
+
+{
+  people.length > 0 && (
+    <section class="mb-12">
+      {title && <h2 class="section-heading">{title}</h2>}
+      {description && <p class="section-subheading">{description}</p>}
+      <div
+        class:list={[
+          'grid gap-4',
+          cardSize === 'large'
+            ? 'grid-cols-1 md:grid-cols-2'
+            : 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3',
+        ]}
+      >
+        {people.map((person) => (
+          <PersonCard person={person} size={cardSize} />
+        ))}
+      </div>
+    </section>
+  )
+}

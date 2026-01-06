@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="600" height="340" viewBox="0 0 600 340">
+  <rect width="600" height="340" fill="#e2e8f0"/>
+  <rect x="50" y="70" width="200" height="200" rx="10" fill="#94a3b8"/>
+  <rect x="280" y="70" width="270" height="90" rx="5" fill="#cbd5e1"/>
+  <rect x="280" y="180" width="200" height="30" rx="5" fill="#cbd5e1"/>
+  <rect x="280" y="230" width="150" height="30" rx="5" fill="#cbd5e1"/>
+  <text x="150" y="180" text-anchor="middle" fill="#64748b" font-family="sans-serif" font-size="24">MRI</text>
+</svg>

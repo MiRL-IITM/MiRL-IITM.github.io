@@ -1,0 +1,26 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import ProjectCard from './ProjectCard.astro';
+
+interface Props {
+  projects: CollectionEntry<'projects'>[];
+  title?: string;
+  description?: string;
+}
+
+const { projects, title, description } = Astro.props;
+---
+
+{
+  projects.length > 0 && (
+    <section class="mb-12">
+      {title && <h2 class="section-heading">{title}</h2>}
+      {description && <p class="section-subheading">{description}</p>}
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {projects.map((project) => (
+          <ProjectCard project={project} />
+        ))}
+      </div>
+    </section>
+  )
+}

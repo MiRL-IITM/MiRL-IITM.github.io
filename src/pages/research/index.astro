@@ -1,0 +1,78 @@
+---
+import { getCollection } from 'astro:content';
+import PageLayout from '../../layouts/PageLayout.astro';
+import ProjectGrid from '../../components/research/ProjectGrid.astro';
+
+const allProjects = await getCollection('projects', ({ data }) => !data.draft);
+
+// Sort by order, then by start date
+const sortedProjects = allProjects.sort((a, b) => {
+  if (a.data.order !== undefined && b.data.order !== undefined) {
+    return a.data.order - b.data.order;
+  }
+  return new Date(b.data.startDate).getTime() - new Date(a.data.startDate).getTime();
+});
+
+const activeProjects = sortedProjects.filter((p) => p.data.status === 'active');
+const completedProjects = sortedProjects.filter((p) => p.data.status === 'completed');
+const upcomingProjects = sortedProjects.filter((p) => p.data.status === 'upcoming');
+
+// Get unique topics for filtering
+const allTopics = [...new Set(allProjects.flatMap((p) => p.data.topics))].sort();
+---
+
+<PageLayout
+  title="Research"
+  description="Research projects at the Medical Imaging and Reconstruction Lab"
+  wide
+>
+  <div class="mb-8">
+    <h1 class="text-4xl font-bold text-primary-900 mb-4">Research</h1>
+    <p class="text-lg text-gray-600 max-w-3xl">
+      Our research focuses on developing computational methods for medical imaging, with emphasis on
+      MRI and CT reconstruction, deep learning, and clinical translation.
+    </p>
+  </div>
+
+  <!-- Research Areas -->
+  <div class="mb-12">
+    <h2 class="text-xl font-semibold text-primary-900 mb-4">Research Areas</h2>
+    <div class="flex flex-wrap gap-2">
+      {
+        allTopics.map((topic) => (
+          <span class="px-4 py-2 bg-primary-50 text-primary-700 rounded-full text-sm font-medium">
+            {topic}
+          </span>
+        ))
+      }
+    </div>
+  </div>
+
+  {
+    upcomingProjects.length > 0 && (
+      <ProjectGrid
+        projects={upcomingProjects}
+        title="Upcoming Projects"
+        description="Projects in the planning or early stages"
+      />
+    )
+  }
+
+  <ProjectGrid
+    projects={activeProjects}
+    title="Active Projects"
+    description="Currently ongoing research initiatives"
+  />
+
+  {
+    completedProjects.length > 0 && (
+      <section class="mt-16 pt-8 border-t border-gray-200">
+        <ProjectGrid
+          projects={completedProjects}
+          title="Completed Projects"
+          description="Past research that has shaped our current work"
+        />
+      </section>
+    )
+  }
+</PageLayout>

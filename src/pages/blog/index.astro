@@ -1,0 +1,182 @@
+---
+import { getCollection } from "astro:content";
+import PageLayout from "../../layouts/PageLayout.astro";
+import PostList from "../../components/blog/PostList.astro";
+
+const allPosts = await getCollection("posts", ({ data }) => !data.draft);
+
+// Sort by date descending
+const sortedPosts = allPosts.sort(
+  (a, b) =>
+    new Date(b.data.pubDate).getTime() - new Date(a.data.pubDate).getTime()
+);
+
+const featuredPosts = sortedPosts.filter((p) => p.data.featured);
+const recentPosts = sortedPosts.slice(0, 9);
+
+// Get unique categories
+const categories = [...new Set(allPosts.map((p) => p.data.category))];
+
+const categoryLabels: Record<string, string> = {
+  "research-highlight": "Research Highlights",
+  publication: "Publications",
+  award: "Awards",
+  event: "Events",
+  announcement: "Announcements",
+  tutorial: "Tutorials",
+};
+---
+
+<PageLayout
+  title="Blog"
+  description="Research highlights, tutorials, and updates from the Medical Imaging and Reconstruction Lab"
+  wide
+>
+  <div class="mb-8">
+    <h1 class="text-4xl font-bold text-primary-900 mb-4">Blog</h1>
+    <p class="text-lg text-gray-600 max-w-3xl">
+      Explore our latest research highlights, tutorials, publications, and lab
+      updates.
+    </p>
+  </div>
+
+  <!-- Category filters -->
+  <div class="flex flex-wrap gap-2 mb-12" id="category-filters">
+    <button
+      class="px-5 py-2.5 bg-primary-900 text-white rounded-full text-sm font-semibold transition-all shadow-sm hover:shadow-md active:scale-95"
+      data-category="all"
+    >
+      All Posts
+    </button>
+    {
+      categories.map((category) => (
+        <button
+          class="px-5 py-2.5 bg-white text-gray-600 border border-gray-200 hover:border-primary-200 hover:bg-primary-50 hover:text-primary-700 rounded-full text-sm font-medium transition-all shadow-sm hover:shadow-md active:scale-95"
+          data-category={category}
+        >
+          {categoryLabels[category]}
+        </button>
+      ))
+    }
+  </div>
+
+  <div id="posts-container" class="space-y-16">
+    {
+      featuredPosts.length > 0 && (
+        <div class="featured-section">
+          <PostList posts={featuredPosts} title="Featured Stories" />
+        </div>
+      )
+    }
+
+    <div class="all-posts-section">
+      <PostList
+        posts={sortedPosts}
+        title={featuredPosts.length > 0 ? "Latest Updates" : undefined}
+      />
+    </div>
+
+    <div
+      id="no-results"
+      class="hidden text-center py-20 bg-gray-50 rounded-2xl border-2 border-dashed border-gray-200"
+    >
+      <p class="text-gray-500 text-lg">No posts found for this category.</p>
+      <button
+        id="reset-filters"
+        class="mt-4 text-primary-600 font-semibold hover:text-primary-700"
+        >View all posts</button
+      >
+    </div>
+  </div>
+
+  <script>
+    const filtersContainer = document.getElementById("category-filters");
+    const filters = filtersContainer?.querySelectorAll("button");
+    const postsContainer = document.getElementById("posts-container");
+    // Select all post cards from both lists.
+    // Note: PostCard has class 'card' and data-category attribute.
+    const cards = document.querySelectorAll(".card");
+    const featuredSection = document.querySelector(
+      ".featured-section"
+    ) as HTMLElement;
+    const allPostsTitle = document.querySelector(
+      ".all-posts-section h2"
+    ) as HTMLElement;
+    const noResults = document.getElementById("no-results");
+    const resetBtn = document.getElementById("reset-filters");
+
+    function filterPosts(category: string) {
+      let visibleCount = 0;
+
+      // Update active button state
+      filters?.forEach((btn) => {
+        if (btn.dataset.category === category) {
+          btn.classList.remove(
+            "bg-white",
+            "text-gray-600",
+            "border",
+            "border-gray-200"
+          );
+          btn.classList.add("bg-primary-900", "text-white");
+        } else {
+          btn.classList.add(
+            "bg-white",
+            "text-gray-600",
+            "border",
+            "border-gray-200"
+          );
+          btn.classList.remove("bg-primary-900", "text-white");
+        }
+      });
+
+      // Toggle featured section visibility
+      if (featuredSection) {
+        if (category === "all") {
+          featuredSection.style.display = "block";
+          if (allPostsTitle) allPostsTitle.style.display = "block";
+        } else {
+          featuredSection.style.display = "none";
+          if (allPostsTitle) allPostsTitle.style.display = "none";
+        }
+      }
+
+      // Filter cards
+      cards.forEach((card) => {
+        // If showing all, we need to handle duplicates between featured and all-posts?
+        // The original code rendered featuredPosts AND sortedPosts (which contains featured ones).
+        // If we want to strictly filter, we can just show/hide.
+
+        if (category === "all") {
+          (card as HTMLElement).style.display = "flex"; // PostCard is flex
+          visibleCount++;
+        } else {
+          const postCategory = (card as HTMLElement).dataset.category;
+          if (postCategory === category) {
+            (card as HTMLElement).style.display = "flex";
+            visibleCount++;
+          } else {
+            (card as HTMLElement).style.display = "none";
+          }
+        }
+      });
+
+      // Show/hide no results
+      if (visibleCount === 0 && noResults) {
+        noResults.classList.remove("hidden");
+      } else if (noResults) {
+        noResults.classList.add("hidden");
+      }
+    }
+
+    filters?.forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const category = btn.dataset.category;
+        if (category) filterPosts(category);
+      });
+    });
+
+    resetBtn?.addEventListener("click", () => {
+      filterPosts("all");
+    });
+  </script>
+</PageLayout>
