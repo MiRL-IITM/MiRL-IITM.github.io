@@ -32,12 +32,10 @@ researchInterests:
 # currentAffiliation: ""
 
 # Admin (Leave as is)
-order: 3
+order: 4
 featured: false
 draft: false
 ---
-
-## Biography
 
 I am a Master’s student with academic interests in developing a solid theoretical and practical foundation in Machine Learning, Computer Vision, and Agentic AI. I am especially motivated to apply these methods to impactful real-world challenges in the medical domain, including medical image analysis and intelligent clinical decision support.
 

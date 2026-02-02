@@ -154,6 +154,7 @@ const courses = defineCollection({
       level: z.enum(['undergraduate', 'graduate', 'mixed']),
       prerequisites: z.array(z.string()).optional(),
       syllabusUrl: z.string().url().optional(),
+      handoutUrl: z.string().url().optional(),
       courseWebsite: z.string().url().optional(),
       thumbnail: image().optional(),
       currentlyOffered: z.boolean().default(true),

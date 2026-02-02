@@ -33,8 +33,6 @@ featured: false
 draft: false
 ---
 
-## Biography
-
 I am Naveetha Nithianandam, a PhD scholar in the MiRL lab at IIT Madras, working under the supervision of Dr. Ganapathy Krishnamurthi. My research focuses on medical image analysis, with particular emphasis on developing efficient and robust methods for quality assessment, segmentation, and classification across diverse imaging modalities.
 
 During my M.Tech, I worked extensively on brain MRI quality analysis, where our approach offered a competitive alternative to state of the art methods, achieving similar performance with substantially reduced computational cost. This work was recognized by ISBI 2025, leading to my first publication at the same conference.

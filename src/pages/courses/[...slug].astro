@@ -19,7 +19,7 @@ const instructors = await Promise.all(
   (data.instructors || []).map(async (slug) => {
     const allPeople = await getCollection("people");
     const person = allPeople.find(
-      (p) => p.id === slug || p.id.split("/").pop() === slug
+      (p) => p.id === slug || p.id.split("/").pop() === slug,
     );
 
     if (person) {
@@ -34,7 +34,7 @@ const instructors = await Promise.all(
       .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
       .join(" ");
     return { name, website: null };
-  })
+  }),
 );
 
 const semesterLabels = {
@@ -107,6 +107,88 @@ const levelLabels = {
         <p class="text-lg text-gray-600 max-w-4xl leading-relaxed">
           {data.description}
         </p>
+
+        <!-- Resources Buttons -->
+        <div class="flex flex-wrap gap-4 mt-6">
+          {
+            data.courseWebsite && (
+              <a
+                href={data.courseWebsite}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-primary-600 hover:bg-primary-700 focus:outline-hidden focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 transition-colors"
+              >
+                <svg
+                  class="mr-2 -ml-1 h-5 w-5"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"
+                  />
+                </svg>
+                Course Website
+              </a>
+            )
+          }
+          {
+            data.syllabusUrl && (
+              <a
+                href={data.syllabusUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="inline-flex items-center px-4 py-2 border border-primary-200 text-sm font-medium rounded-md shadow-sm text-primary-700 bg-white hover:bg-primary-50 focus:outline-hidden focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 transition-colors"
+              >
+                <svg
+                  class="mr-2 -ml-1 h-5 w-5"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+                  />
+                </svg>
+                Syllabus
+              </a>
+            )
+          }
+          {
+            data.handoutUrl && (
+              <a
+                href={data.handoutUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="inline-flex items-center px-4 py-2 border border-primary-200 text-sm font-medium rounded-md shadow-sm text-primary-700 bg-white hover:bg-primary-50 focus:outline-hidden focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 transition-colors"
+              >
+                <svg
+                  class="mr-2 -ml-1 h-5 w-5"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"
+                  />
+                </svg>
+                Course Handout
+              </a>
+            )
+          }
+        </div>
       </div>
 
       <!-- Course Overview Card -->
@@ -132,7 +214,7 @@ const levelLabels = {
           </svg>
           Course Overview
         </h3>
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           <div>
             <dt
               class="text-sm font-semibold text-gray-500 uppercase tracking-wide mb-1"
@@ -182,18 +264,6 @@ const levelLabels = {
               </div>
             )
           }
-
-          {
-            data.location && (
-              <div>
-                <dt class="text-sm font-semibold text-gray-500 uppercase tracking-wide mb-1">
-                  Location
-                </dt>
-                <dd class="text-gray-900 font-medium">{data.location}</dd>
-              </div>
-            )
-          }
-
           {
             data.schedule && (
               <div class="md:col-span-2 lg:col-span-4 bg-white rounded-lg border border-gray-200 overflow-hidden shadow-sm">
@@ -225,7 +295,7 @@ const levelLabels = {
                         .replace("Slot", "")
                         .trim();
                       const scheduleDetails = data.schedule.substring(
-                        firstColonIndex + 1
+                        firstColonIndex + 1,
                       );
 
                       return (
@@ -270,6 +340,16 @@ const levelLabels = {
                     </span>
                   )}
                 </dd>
+              </div>
+            )
+          }
+          {
+            data.location && (
+              <div>
+                <dt class="text-sm font-semibold text-gray-500 uppercase tracking-wide mb-1">
+                  Location
+                </dt>
+                <dd class="text-gray-900 font-medium">{data.location}</dd>
               </div>
             )
           }

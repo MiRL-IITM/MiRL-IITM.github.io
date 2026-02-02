@@ -12,16 +12,18 @@ orcid: ""
 twitter: ""
 github: ""
 researchInterests:
-  - Medical Image Reconstruction
-  - Deep Learning for MRI
-  - Computational Imaging
+  - Medical Image Analysis
+  - Medical Physics
+  - Deep Learning
+
 featured: true
 order: 1
 draft: false
 ---
 
+<!--
 ## Biography
 
 ## Education
 
-## Awards
+## Awards -->

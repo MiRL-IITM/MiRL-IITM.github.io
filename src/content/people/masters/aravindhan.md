@@ -32,12 +32,10 @@ researchInterests:
 # currentAffiliation: ""
 
 # Admin (Leave as is)
-order: 2
+order: 3
 featured: false
 draft: false
 ---
-
-## Biography
 
 I completed my B.Tech in Mechatronics Engineering from SASTRA University, Thanjavur, where I developed a solid interdisciplinary foundation across mechanical systems, electronics, control engineering, and intelligent algorithms. As part of my undergraduate capstone project, I designed a voice-controlled bionic arm using convolutional neural networks (CNNs) integrated with a NodeMCU ESP8266, which sparked my long-term interest in robotics, embedded intelligence, and human–machine interaction.
 

@@ -9,88 +9,62 @@ import PageLayout from "../layouts/PageLayout.astro";
 >
   <!-- Hero Section -->
   <h1 class="text-5xl font-bold mb-4">About MiRL</h1>
-  <p class="text-2xl text-primary-500 max-w-7xl">
-    Advancing medical imaging technology through innovative research and
-    clinical collaboration
+  <p class="text-xl text-gray-700 max-w-4xl text-justify mb-8 leading-relaxed">
+    The <span class="font-bold text-primary-700"
+      >Medical Imaging and Reconstruction Laboratory (MiRL)</span
+    > is an interdisciplinary research hub dedicated to bridging the gap between advanced
+    computational intelligence and clinical practice. At our core, we specialize in
+    the development of next-generation medical imaging solutions—ranging from high-resolution
+    Image Reconstruction to the deployment of Medical Foundational Models.
   </p>
   <hr class="my-10 border-white" />
 
   <!-- Mission Section -->
   <section class="mb-16">
-    <div>
-      <h2
-        class="text-3xl font-bold text-primary-900 mb-6 flex items-center gap-3"
+    <h2
+      class="text-3xl font-bold text-primary-900 mb-6 flex items-center gap-3"
+    >
+      <svg
+        class="w-8 h-8 text-accent-600"
+        fill="none"
+        stroke="currentColor"
+        viewBox="0 0 24 24"
       >
-        <svg
-          class="w-8 h-8 text-accent-600"
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
-        >
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
-            d="M13 10V3L4 14h7v7l9-11h-7z"></path>
-        </svg>
-        Our Mission
-      </h2>
-      <div class="prose prose-lg text-gray-700 max-w-6xl text-justify">
-        <p>
-          In close collaboration with radiologists, we develop methods for
-          automated analysis of medical images towards obtaining useful
-          diagnostic and prognostic information. We validate these methods on
-          publicly available databases as well as using data from our
-          radiologist collaborators.
-        </p>
-      </div>
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+      </svg>
+      Mission Statement
+    </h2>
+    <div
+      class="bg-primary-50 border-l-4 border-primary-500 p-8 rounded-r-xl shadow-sm"
+    >
+      <p class="text-xl text-primary-900 italic font-medium leading-relaxed">
+        "To transform the landscape of healthcare by developing explainable,
+        physics-grounded AI systems that empower clinicians, optimize diagnostic
+        accuracy, and redefine the boundaries of medical image reconstruction."
+      </p>
     </div>
   </section>
 
   <!-- Research Areas Section -->
   <section class="mb-16">
     <h2 class="text-3xl font-bold text-primary-900 mb-8 text-center">
-      Research Areas
+      Core Research Areas
     </h2>
     <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+      <!-- Area 1 -->
       <div
         class="bg-white rounded-xl p-8 shadow-lg hover:shadow-xl transition-shadow border border-gray-100"
       >
         <div
           class="w-14 h-14 bg-primary-100 rounded-lg flex items-center justify-center mb-4"
         >
+          <!-- Icon for Multimodal/AI -->
           <svg
             class="w-8 h-8 text-primary-700"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"
-            ></path>
-          </svg>
-        </div>
-        <h3 class="text-2xl font-semibold text-primary-900 mb-4">
-          Medical Image Processing
-        </h3>
-        <p class="text-gray-600 leading-relaxed text-justify">
-          Development of advanced computational methods for medical image
-          analysis, including segmentation, registration, and quantitative
-          analysis for diagnostic and prognostic applications.
-        </p>
-      </div>
-
-      <div
-        class="bg-white rounded-xl p-8 shadow-lg hover:shadow-xl transition-shadow border border-gray-100"
-      >
-        <div
-          class="w-14 h-14 bg-accent-100 rounded-lg flex items-center justify-center mb-4"
-        >
-          <svg
-            class="w-8 h-8 text-accent-700"
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"
@@ -104,45 +78,109 @@ import PageLayout from "../layouts/PageLayout.astro";
           </svg>
         </div>
         <h3 class="text-2xl font-semibold text-primary-900 mb-4">
-          Multi-Modal Pre-Clinical Imaging Systems
+          Foundational & Multimodal Medical AI
         </h3>
         <p class="text-gray-600 leading-relaxed text-justify">
-          Design and development of low-cost imaging systems for pre-clinical
-          research, including fluorescence imaging and x-ray micro-CT systems
-          for in-vivo studies.
+          Developing large-scale foundational models and multimodal systems
+          capable of synthesizing complex data across diverse imaging types and
+          clinical records to provide holistic diagnostic insights.
         </p>
       </div>
-    </div>
-  </section>
 
-  <!-- Collaboration Section -->
-  <section class="mb-16">
-    <div class="bg-white rounded-xl shadow-lg p-10 border border-gray-100">
-      <h2
-        class="text-3xl font-bold text-primary-900 mb-6 flex items-center gap-3"
+      <!-- Area 2 -->
+      <div
+        class="bg-white rounded-xl p-8 shadow-lg hover:shadow-xl transition-shadow border border-gray-100"
       >
-        <svg
-          class="w-8 h-8 text-accent-600"
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
+        <div
+          class="w-14 h-14 bg-accent-100 rounded-lg flex items-center justify-center mb-4"
         >
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
-            d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"
-          ></path>
-        </svg>
-        Collaboration
-      </h2>
-      <p class="text-gray-700 text-lg leading-relaxed text-justify">
-        Our research is conducted in close collaboration with clinical
-        radiologists and medical professionals to ensure that our technological
-        innovations translate effectively into clinical practice. We work with
-        both publicly available medical imaging databases and proprietary
-        clinical datasets to validate and refine our methods.
-      </p>
+          <!-- Icon for Physics -->
+          <svg
+            class="w-8 h-8 text-accent-700"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+          </svg>
+        </div>
+        <h3 class="text-2xl font-semibold text-primary-900 mb-4">
+          Physics-Informed Reconstruction & Analysis
+        </h3>
+        <p class="text-gray-600 leading-relaxed text-justify">
+          Leveraging Physics-Informed Neural Networks (PINNs) and our in-house
+          Micro-CT capabilities to enhance image quality and accuracy while
+          ensuring models adhere to the fundamental laws of medical physics.
+        </p>
+      </div>
+
+      <!-- Area 3 -->
+      <div
+        class="bg-white rounded-xl p-8 shadow-lg hover:shadow-xl transition-shadow border border-gray-100"
+      >
+        <div
+          class="w-14 h-14 bg-teal-100 rounded-lg flex items-center justify-center mb-4"
+        >
+          <!-- Icon for Explainable AI -->
+          <svg
+            class="w-8 h-8 text-teal-700"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+            ></path>
+          </svg>
+        </div>
+        <h3 class="text-2xl font-semibold text-primary-900 mb-4">
+          Explainable AI (XAI) for Clinical Workflows
+        </h3>
+        <p class="text-gray-600 leading-relaxed text-justify">
+          Designing human-in-the-loop systems and Agentic Workflows that provide
+          transparent reasoning for AI decisions, fostering trust and improving
+          efficiency for doctors in high-stakes environments.
+        </p>
+      </div>
+
+      <!-- Area 4 -->
+      <div
+        class="bg-white rounded-xl p-8 shadow-lg hover:shadow-xl transition-shadow border border-gray-100"
+      >
+        <div
+          class="w-14 h-14 bg-indigo-100 rounded-lg flex items-center justify-center mb-4"
+        >
+          <!-- Icon for Diagnostics -->
+          <svg
+            class="w-8 h-8 text-indigo-700"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"
+            ></path>
+          </svg>
+        </div>
+        <h3 class="text-2xl font-semibold text-primary-900 mb-4">
+          Advanced Diagnostics & Image Analysis
+        </h3>
+        <p class="text-gray-600 leading-relaxed text-justify">
+          Pioneering automated detection and segmentation techniques that
+          streamline the analysis of complex medical imagery, reducing the time
+          from scan to diagnosis.
+        </p>
+      </div>
     </div>
   </section>
 </PageLayout>

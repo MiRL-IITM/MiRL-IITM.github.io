@@ -8,7 +8,7 @@ authors:
   - Minmini Selvam
   - Gokulraja Srinivasaraja
   - Ganapathy Krishnamurthi
-venue: "Unknown Venue"
+venue: "Agentic AI, MICCAI 2025"
 year: 2025
 pages: "33-45"
 type: journal

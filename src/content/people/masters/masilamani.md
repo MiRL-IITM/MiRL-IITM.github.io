@@ -32,12 +32,10 @@ researchInterests:
 # currentAffiliation: ""
 
 # Admin (Leave as is)
-order: 4
+order: 5
 featured: false
 draft: false
 ---
-
-## Biography
 
 I am a Master’s student with interests in machine learning, deep learning, computer vision, and medical imaging.
 My academic focus is on building a strong theoretical and practical foundation in machine learning, deep learning,

@@ -34,45 +34,54 @@ const allTopics = [...new Set(allProjects.flatMap((p) => p.data.topics))].sort()
     </p>
   </div>
 
-  <!-- Research Areas -->
-  <div class="mb-12">
-    <h2 class="text-xl font-semibold text-primary-900 mb-4">Research Areas</h2>
-    <div class="flex flex-wrap gap-2">
-      {
-        allTopics.map((topic) => (
-          <span class="px-4 py-2 bg-primary-50 text-primary-700 rounded-full text-sm font-medium">
-            {topic}
-          </span>
-        ))
-      }
-    </div>
-  </div>
-
   {
-    upcomingProjects.length > 0 && (
-      <ProjectGrid
-        projects={upcomingProjects}
-        title="Upcoming Projects"
-        description="Projects in the planning or early stages"
-      />
-    )
-  }
+    sortedProjects.length > 0 ? (
+      <>
+        <!-- Research Areas -->
+        <div class="mb-12">
+          <h2 class="text-xl font-semibold text-primary-900 mb-4">
+            Research Areas
+          </h2>
+          <div class="flex flex-wrap gap-2">
+            {allTopics.map((topic) => (
+              <span class="px-4 py-2 bg-primary-50 text-primary-700 rounded-full text-sm font-medium">
+                {topic}
+              </span>
+            ))}
+          </div>
+        </div>
 
-  <ProjectGrid
-    projects={activeProjects}
-    title="Active Projects"
-    description="Currently ongoing research initiatives"
-  />
+        {upcomingProjects.length > 0 && (
+          <ProjectGrid
+            projects={upcomingProjects}
+            title="Upcoming Projects"
+            description="Projects in the planning or early stages"
+          />
+        )}
 
-  {
-    completedProjects.length > 0 && (
-      <section class="mt-16 pt-8 border-t border-gray-200">
-        <ProjectGrid
-          projects={completedProjects}
-          title="Completed Projects"
-          description="Past research that has shaped our current work"
-        />
-      </section>
+        {/* Only show active projects grid if there are active projects? Or maybe empty grid handles it? ProjectGrid probably iterates. */}
+        {activeProjects.length > 0 && (
+          <ProjectGrid
+            projects={activeProjects}
+            title="Active Projects"
+            description="Currently ongoing research initiatives"
+          />
+        )}
+
+        {completedProjects.length > 0 && (
+          <section class="mt-16 pt-8 border-t border-gray-200">
+            <ProjectGrid
+              projects={completedProjects}
+              title="Completed Projects"
+              description="Past research that has shaped our current work"
+            />
+          </section>
+        )}
+      </>
+    ) : (
+      <div class="text-center py-20 bg-gray-50 rounded-2xl border-2 border-dashed border-gray-200">
+        <p class="text-gray-500 text-lg italic">Will be updated soon.</p>
+      </div>
     )
   }
 </PageLayout>
